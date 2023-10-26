@@ -5,18 +5,22 @@ class BlogsController < ApplicationController
     @blogs = Blog.all
   end
 
-  def show; end
+  def show
+    @blog = Blog.find(params[:id])
+  end
 
   def new
     @blog = Blog.new
   end
 
-  def edit; end
+  def edit
+    @blog = Blog.find(params[:id])
+  end
 
   def create
     @blog = Blog.new(blog_params)
     if @blog.save
-      redirect_to @blog, notice: 'Blog was successfully created.'
+      redirect_to blogs_path, notice: 'Blog was successfully created.'
     else
       render :new
     end
@@ -42,6 +46,6 @@ class BlogsController < ApplicationController
   end
 
   def blog_params
-    params.require(:blog).permit(:title)
+    params.require(:blog).permit(:title, :content)
   end
 end
